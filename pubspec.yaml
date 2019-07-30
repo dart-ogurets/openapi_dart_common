@@ -1,5 +1,8 @@
 name: openapi_dart_common
 version: 1.0.0
+authors:
+  - Richard Vowles <richard@bluetrainsoftware.com>
+homepage: https://github.com/dart-ogurets/openapi_dart_common
 description: OpenAPI API common libraries so the generator doesn't generate them
 environment:
   sdk: '>=2.2.0 <3.0.0'
