@@ -92,8 +92,9 @@ class ApiClient {
       List<QueryParam> queryParams, Map<String, String> headerParams) {
     authNames.forEach((authName) {
       Authentication auth = _authentications[authName];
-      if (auth == null)
+      if (auth == null) {
         throw ArgumentError("Authentication undefined: " + authName);
+      }
       auth.applyToParams(queryParams, headerParams);
     });
   }

@@ -1,10 +1,10 @@
 # OpenAPI Common Library for Dart Client Code Generator
 
-This library forms the core reusable library for the https://github.com/dart-ogurets/dart-openapi-maven[Maven plugin].
+This library forms the core reusable library for the [Maven plugin](https://github.com/dart-ogurets/dart-openapi-maven).
 
 It is intended to allow you to generate a single client library from an OpenAPI file, and allow you to reuse it across
 multiple clients - Flutter for Web (browser), Flutter and Dart CLI (such as when using 
-https://pub.dev/packages/ogurets[Ogurets] for e2e testing).
+[Ogurets](https://pub.dev/packages/ogurets) for e2e testing).
 
 ### How to use
 
