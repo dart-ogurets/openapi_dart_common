@@ -125,7 +125,10 @@ class ApiClient {
     String queryString = ps.isNotEmpty ? '?' + ps.join('&') : '';
 
     headerParams.addAll(_defaultHeaderMap);
-    headerParams['Content-Type'] = contentType;
+    
+    if (contentType != null) {
+      headerParams['Content-Type'] = contentType;
+    }
 
     return apiClientDelegate.invokeAPI(
         basePath,

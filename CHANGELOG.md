@@ -1,3 +1,7 @@
+1.0.2
+=======
+* allow content-type header to be empty
+
 1.0.1
 =======
 * Feedback from release process
