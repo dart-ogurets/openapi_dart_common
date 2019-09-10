@@ -1,3 +1,7 @@
+1.1.0
+=======
+* breaking change, generated code needs to know how to serialize
+
 1.0.2
 =======
 * allow content-type header to be empty

@@ -30,6 +30,7 @@ abstract class ApiClientDelegate {
 
 abstract class DeserializeDelegate {
   dynamic deserialize(dynamic value, String targetType);
+  dynamic serialize(Object value);
 
   String parameterToString(dynamic value);
 }
@@ -81,7 +82,7 @@ class ApiClient {
     if (obj == null) {
       serialized = '';
     } else {
-      serialized = json.encode(obj);
+      serialized = json.encode(deserializeDelegate.serialize(obj));
     }
     return serialized;
   }
