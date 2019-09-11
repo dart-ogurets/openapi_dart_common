@@ -68,6 +68,10 @@ class ApiClient {
   }
 
   dynamic deserialize(String json, String targetType) {
+    if (json == null) { // HTTP Code 204
+      return null;
+    }
+    
     // Remove all spaces.  Necessary for reg expressions as well.
     targetType = targetType.replaceAll(' ', '');
 

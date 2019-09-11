@@ -1,3 +1,7 @@
+1.1.1
+=======
+* http code 204 returns a null json response which caused a crash
+
 1.1.0
 =======
 * breaking change, generated code needs to know how to serialize
