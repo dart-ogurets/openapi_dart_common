@@ -1,39 +1,5 @@
 part of dart_openapi;
 
-class QueryParam {
-  String name;
-  String value;
-
-  QueryParam(this.name, this.value);
-}
-
-class ApiResponse {
-  Stream<List<int>> body;
-  Map<String, List<String>> headers;
-  int statusCode;
-}
-
-abstract class ApiClientDelegate {
-  Future<ApiResponse> invokeAPI(
-      String basePath,
-      String queryString,
-      String path,
-      String method,
-      Iterable<QueryParam> queryParams,
-      Object body,
-      String jsonBody,
-      Map<String, String> headerParams,
-      Map<String, String> formParams,
-      String contentType,
-      List<String> authNames);
-}
-
-abstract class DeserializeDelegate {
-  dynamic deserialize(dynamic value, String targetType);
-  dynamic serialize(Object value);
-
-  String parameterToString(dynamic value);
-}
 
 class ApiClient {
   final DeserializeDelegate deserializeDelegate;
@@ -46,9 +12,9 @@ class ApiClient {
   ApiClient(
       {this.basePath = "http://localhost",
       this.deserializeDelegate,
-      this.apiClientDelegate})
-      : assert(deserializeDelegate != null),
-        assert(apiClientDelegate != null);
+      apiClientDelegate})
+      : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate(),
+        assert(deserializeDelegate != null);
 
   void setDefaultHeader(String key, String value) {
     if (value == null) {
@@ -114,38 +80,24 @@ class ApiClient {
   // If collectionFormat is 'multi' a key might appear multiple times.
   Future<ApiResponse> invokeAPI(
       String path,
-      String method,
       Iterable<QueryParam> queryParams,
       Object body,
       Map<String, String> headerParams,
-      Map<String, String> formParams,
-      String contentType,
-      List<String> authNames) async {
+      List<String> authNames,
+      Options options) async {
     _updateParamsForAuth(authNames, queryParams, headerParams);
 
-    var ps = queryParams
-        .where((p) => p.value != null)
-        .map((p) => '${p.name}=${Uri.encodeQueryComponent(p.value)}');
-
-    String queryString = ps.isNotEmpty ? '?' + ps.join('&') : '';
-
     headerParams.addAll(_defaultHeaderMap);
-    
-    if (contentType != null) {
-      headerParams['Content-Type'] = contentType;
-    }
 
+    options.headers = options.headers ?? {};
+    options.headers.addAll(headerParams);
+    
     return apiClientDelegate.invokeAPI(
         basePath,
-        queryString,
         path,
-        method,
         queryParams,
         body,
-        body is MultipartRequest ? null : serialize(body),
-        headerParams,
-        formParams,
-        contentType,
-        authNames);
+        body is FormData ? null : serialize(body),
+        options);
   }
 }

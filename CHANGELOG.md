@@ -1,3 +1,8 @@
+2.0.0
+======
+* swap to Dio from the http package. Dio has extensive support for all sorts of features,
+particularly including client side certificate pinning.
+
 1.1.1
 =======
 * http code 204 returns a null json response which caused a crash

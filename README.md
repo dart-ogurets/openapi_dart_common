@@ -13,7 +13,7 @@ Add these to your `pubspec.yaml` and then combine them together.
 
 ```yaml
 dependencies:
-  openapi_dart_common: ^1.0.0
+  openapi_dart_common: ^2.0.0
   your_generated_lib:
     path:
       ../your_generated_lib
@@ -21,9 +21,9 @@ dependencies:
 
 (for example)
 
-In your application, each of the generated Services will require an ApiClient. To construct this you will need to chose
-the correct `apiClientDelegate` depending on whether you are using the Browser (such as Flutter for Web) `BrowserApiClientDelegate`
-or the CLI or Flutter Mobile `CliApiClientDelegate`. 
+In your application, each of the generated Services will require an ApiClient. 
+As of version 2.0 we have swapped to Dio, which takes care of browser vs CLI, so you
+only need to specify DioClientDelegate() if you wish to override the Dio instance (providing extra options, etc). 
  
 It also needs to know how to deserialize specific models and enums - those from your generated code, so a typical 
 creation could look like this:
@@ -32,7 +32,7 @@ creation could look like this:
     _apiClient = ApiClient(
       basePath: "http://localhost:8903",
       deserializeDelegate: LocalApiClient(),
-      apiClientDelegate: CliApiClientDelegate());
+      apiClientDelegate: DioClientDelegate());
 ```
 
 and then you can use your _apiClient instance in your models, consistently across all platforms:

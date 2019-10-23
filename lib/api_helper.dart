@@ -61,7 +61,7 @@ Future<String> decodeBodyBytes(ApiResponse response) async {
 //  if (contentType != null && contentType.first.contains("application/json")) {
   // there simply isn't anything else to use
   try {
-    var val = await response.body.transform(utf8.decoder).join();
+    var val = await utf8.decodeStream(response.body);
     return val == '' ? null : val;
   } catch (e) {
     print(e.toString()); // for time being
