@@ -20,13 +20,20 @@ class DioClientDelegate implements ApiClientDelegate {
     options.receiveDataWhenStatusError = true;
 
     try {
-      final Response<ResponseBody> response = await client.request<
-          ResponseBody>(url,
-          options: options,
-          data: jsonBody ?? body,
-          queryParameters: qp);
+      Response<ResponseBody> response;
 
-      assert(response.data.stream is Stream<List<int>>);
+      if (['GET', 'HEAD', 'DELETE'].contains(options.method)) {
+        response = await client.request<
+            ResponseBody>(url,
+            options: options,
+            queryParameters: qp);
+      } else {
+        response = await client.request<
+            ResponseBody>(url,
+            options: options,
+            data: jsonBody ?? body,
+            queryParameters: qp);
+      }
 
       return ApiResponse()
         ..headers = _convertHeaders(response.headers)

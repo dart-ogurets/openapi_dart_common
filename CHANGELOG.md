@@ -1,3 +1,9 @@
+2.0.1
+======
+* swapping to Dio introduced a subtle bug in DELETE for browser. A DELETE with a browser
+would cause an exception that couldn't be caught and only showed up in the browser as a
+Bad Element.
+
 2.0.0
 ======
 * swap to Dio from the http package. Dio has extensive support for all sorts of features,
