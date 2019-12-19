@@ -41,7 +41,11 @@ class DioClientDelegate implements ApiClientDelegate {
         ..body = response.data.stream;
     } catch (e, s) {
       if (e is DioError) {
-        throw new ApiException.withInner(e.response.statusCode, e.response.data == null ? null : await utf8.decodeStream(e.response.data.stream), e, s);
+        if (e.response == null) {
+          throw ApiException.withInner(500, 'Connection error', e, s);
+        } else {
+          throw ApiException.withInner(e.response.statusCode, e.response.data == null ? null : await utf8.decodeStream(e.response.data.stream), e, s);
+        }
       }
 
       throw e;
