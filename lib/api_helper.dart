@@ -71,3 +71,15 @@ Future<String> decodeBodyBytes(ApiResponse response) async {
 //    return await response.body.transform(String.)
 //  }
 }
+
+//extension DateTimeOpenapiExtension on DateTime {
+//  DateTime fromJson(dynamic json) {
+//
+//  }
+//}
+
+List<DateTime> openApiDateTimeList(dynamic json) {
+  List<String> dts = (json as List).cast<String>();
+  return dts.map((s) => DateTime.parse(s)).toList();
+}
+
