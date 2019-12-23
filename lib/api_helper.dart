@@ -78,6 +78,12 @@ Future<String> decodeBodyBytes(ApiResponse response) async {
 //  }
 //}
 
+// this exists because we otherwise need an extension method DateTime.fromJson and i don't want to clash with other libs
+DateTime openApiDateTimeFromJson(dynamic json) {
+  return DateTime.parse(json as String);
+}
+
+// this is the same, but for a json object which is in fact a list of strings
 List<DateTime> openApiDateTimeList(dynamic json) {
   List<String> dts = (json as List).cast<String>();
   return dts.map((s) => DateTime.parse(s)).toList();
