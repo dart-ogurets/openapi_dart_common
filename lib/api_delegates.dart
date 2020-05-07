@@ -18,13 +18,9 @@ abstract class ApiClientDelegate {
       String basePath,
       String path,
       Iterable<QueryParam> queryParams,
-      Object body,
-      String jsonBody, Options options);
+      Object body, Options options);
 }
 
-abstract class DeserializeDelegate {
-  dynamic deserialize(dynamic value, String targetType);
-  dynamic serialize(Object value);
-
+abstract class QueryParamHelper {
   String parameterToString(dynamic value);
 }

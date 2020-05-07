@@ -1,3 +1,7 @@
+3.0.0
+=====
+significant refactoring to co-incide with the 3.x release of the Dart plugin cleanup.
+
 2.0.1
 ======
 * swapping to Dio introduced a subtle bug in DELETE for browser. A DELETE with a browser

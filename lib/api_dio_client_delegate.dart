@@ -8,7 +8,7 @@ class DioClientDelegate implements ApiClientDelegate {
 
   @override
   Future<ApiResponse> invokeAPI(String basePath, String path,
-      Iterable<QueryParam> queryParams, Object body, String jsonBody, Options options) async {
+      Iterable<QueryParam> queryParams, Object body, Options options) async {
 
     String url = basePath + path;
 
@@ -31,14 +31,14 @@ class DioClientDelegate implements ApiClientDelegate {
         response = await client.request<
             ResponseBody>(url,
             options: options,
-            data: jsonBody ?? body,
+            data: body,
             queryParameters: qp);
       }
 
       return ApiResponse()
-        ..headers = _convertHeaders(response.headers)
-        ..statusCode = response.statusCode
-        ..body = response.data.stream;
+        ..headers = _convertHeaders(response?.headers)
+        ..statusCode = response?.statusCode ?? 500
+        ..body = response?.data.stream;
     } catch (e, s) {
       if (e is DioError) {
         if (e.response == null) {
@@ -54,7 +54,7 @@ class DioClientDelegate implements ApiClientDelegate {
 
   Map<String, List<String>> _convertHeaders(Headers headers) {
     Map<String, List<String>> res = {};
-    headers.forEach((k, v) => res[k] = v);
+    headers?.forEach((k, v) => res[k] = v);
     return res;
   }
 }

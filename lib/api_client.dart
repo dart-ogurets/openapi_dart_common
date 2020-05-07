@@ -2,7 +2,6 @@ part of dart_openapi;
 
 
 class ApiClient {
-  final DeserializeDelegate deserializeDelegate;
   ApiClientDelegate apiClientDelegate;
   String basePath;
 
@@ -11,10 +10,8 @@ class ApiClient {
 
   ApiClient(
       {this.basePath = "http://localhost",
-      this.deserializeDelegate,
       apiClientDelegate})
-      : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate(),
-        assert(deserializeDelegate != null);
+      : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
 
   void setDefaultHeader(String key, String value) {
     if (value == null) {
@@ -31,30 +28,6 @@ class ApiClient {
     } else {
       _authentications[key] = auth;
     }
-  }
-
-  dynamic deserialize(String json, String targetType) {
-    if (json == null) { // HTTP Code 204
-      return null;
-    }
-    
-    // Remove all spaces.  Necessary for reg expressions as well.
-    targetType = targetType.replaceAll(' ', '');
-
-    if (targetType == 'String') return json;
-
-    var decodedJson = jsonDecode(json);
-    return deserializeDelegate.deserialize(decodedJson, targetType);
-  }
-
-  String serialize(Object obj) {
-    String serialized = '';
-    if (obj == null) {
-      serialized = '';
-    } else {
-      serialized = json.encode(deserializeDelegate.serialize(obj));
-    }
-    return serialized;
   }
 
   /// Update query and header parameters based on authentication settings.
@@ -97,7 +70,6 @@ class ApiClient {
         path,
         queryParams,
         body,
-        body is FormData ? null : serialize(body),
         options);
   }
 }

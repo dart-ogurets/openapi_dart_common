@@ -4,7 +4,7 @@ const _delimiters = const {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 
 // port from Java version
 Iterable<QueryParam> convertParametersForCollectionFormat(
-    DeserializeDelegate deserializeDelegate,
+    QueryParamHelper deserializeDelegate,
     String collectionFormat,
     String name,
     dynamic value) {
@@ -14,7 +14,7 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
   if (name == null || name.isEmpty || value == null) return params;
 
   if (value is! List) {
-    params.add(QueryParam(name, parameterToString(deserializeDelegate, value)));
+    params.add(QueryParam(name, deserializeDelegate.parameterToString(value)));
     return params;
   }
 
@@ -27,7 +27,7 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
 
   if (collectionFormat == "multi") {
     return values.map(
-        (v) => QueryParam(name, parameterToString(deserializeDelegate, v)));
+        (v) => QueryParam(name, deserializeDelegate.parameterToString(v)));
   }
 
   String delimiter = _delimiters[collectionFormat] ?? ",";
@@ -35,22 +35,11 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
   params.add(QueryParam(
       name,
       values
-          .map((v) => parameterToString(deserializeDelegate, v))
+          .map((v) => deserializeDelegate.parameterToString(v))
           .join(delimiter)));
   return params;
 }
 
-/// Format the given parameter object into string.
-String parameterToString(
-    DeserializeDelegate deserializeDelegate, dynamic value) {
-  if (value == null) {
-    return '';
-  } else if (value is DateTime) {
-    return value.toUtc().toIso8601String();
-  }
-
-  return deserializeDelegate.parameterToString(value) ?? value.toString();
-}
 
 /// Returns the decoded body by utf-8 if application/json with the given headers.
 /// Else, returns the decoded body by default algorithm of dart:http.
