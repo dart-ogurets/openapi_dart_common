@@ -3,13 +3,11 @@ part of dart_openapi;
 class DioClientDelegate implements ApiClientDelegate {
   final Dio client;
 
-  DioClientDelegate([Dio client])
-      : client = client ?? Dio();
+  DioClientDelegate([Dio client]) : client = client ?? Dio();
 
   @override
   Future<ApiResponse> invokeAPI(String basePath, String path,
       Iterable<QueryParam> queryParams, Object body, Options options) async {
-
     String url = basePath + path;
 
     // fill in query parameters
@@ -19,20 +17,21 @@ class DioClientDelegate implements ApiClientDelegate {
     options.responseType = ResponseType.stream;
     options.receiveDataWhenStatusError = true;
 
+    // Dio can't cope with this in both places, it just adds them together in a stupid way
+    if (options.headers['Content-Type'] != null) {
+      options.contentType = options.headers['Content-Type'];
+      options.headers.remove('Content-Type');
+    }
+
     try {
       Response<ResponseBody> response;
 
       if (['GET', 'HEAD', 'DELETE'].contains(options.method)) {
-        response = await client.request<
-            ResponseBody>(url,
-            options: options,
-            queryParameters: qp);
+        response = await client.request<ResponseBody>(url,
+            options: options, queryParameters: qp);
       } else {
-        response = await client.request<
-            ResponseBody>(url,
-            options: options,
-            data: body,
-            queryParameters: qp);
+        response = await client.request<ResponseBody>(url,
+            options: options, data: body, queryParameters: qp);
       }
 
       return ApiResponse()
@@ -44,7 +43,13 @@ class DioClientDelegate implements ApiClientDelegate {
         if (e.response == null) {
           throw ApiException.withInner(500, 'Connection error', e, s);
         } else {
-          throw ApiException.withInner(e.response.statusCode, e.response.data == null ? null : await utf8.decodeStream(e.response.data.stream), e, s);
+          throw ApiException.withInner(
+              e.response.statusCode,
+              e.response.data == null
+                  ? null
+                  : await utf8.decodeStream(e.response.data.stream),
+              e,
+              s);
         }
       }
 

@@ -1,3 +1,7 @@
+3.0.1
+=====
+fix for dio content headers
+
 3.0.0
 =====
 significant refactoring to co-incide with the 3.x release of the Dart plugin cleanup.

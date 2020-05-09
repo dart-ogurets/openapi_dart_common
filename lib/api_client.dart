@@ -1,6 +1,5 @@
 part of dart_openapi;
 
-
 class ApiClient {
   ApiClientDelegate apiClientDelegate;
   String basePath;
@@ -8,9 +7,7 @@ class ApiClient {
   Map<String, String> _defaultHeaderMap = {};
   Map<String, Authentication> _authentications = {};
 
-  ApiClient(
-      {this.basePath = "http://localhost",
-      apiClientDelegate})
+  ApiClient({this.basePath = "http://localhost", apiClientDelegate})
       : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
 
   void setDefaultHeader(String key, String value) {
@@ -60,16 +57,10 @@ class ApiClient {
       Options options) async {
     _updateParamsForAuth(authNames, queryParams, headerParams);
 
-    headerParams.addAll(_defaultHeaderMap);
-
-    options.headers = options.headers ?? {};
+    options.headers.addAll(_defaultHeaderMap);
     options.headers.addAll(headerParams);
-    
+
     return apiClientDelegate.invokeAPI(
-        basePath,
-        path,
-        queryParams,
-        body,
-        options);
+        basePath, path, queryParams, body, options);
   }
 }
