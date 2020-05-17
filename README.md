@@ -31,7 +31,6 @@ creation could look like this:
 ```dart
     _apiClient = ApiClient(
       basePath: "http://localhost:8903",
-      deserializeDelegate: LocalApiClient(),
       apiClientDelegate: DioClientDelegate());
 ```
 
