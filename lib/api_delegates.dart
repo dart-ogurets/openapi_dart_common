@@ -14,13 +14,10 @@ class ApiResponse {
 }
 
 abstract class ApiClientDelegate {
-  Future<ApiResponse> invokeAPI(
-      String basePath,
-      String path,
-      Iterable<QueryParam> queryParams,
-      Object body, Options options);
+  Future<ApiResponse> invokeAPI(String basePath, String path,
+      Iterable<QueryParam> queryParams, Object body, Options options);
 }
 
-abstract class QueryParamHelper {
-  String parameterToString(dynamic value);
-}
+// a function that will convert a parameter to a string, used by the
+// local api client to pass in the reference to this helper function lib
+typedef String ParameterToString(dynamic value);

@@ -4,7 +4,7 @@ const _delimiters = const {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 
 // port from Java version
 Iterable<QueryParam> convertParametersForCollectionFormat(
-    QueryParamHelper deserializeDelegate,
+    ParameterToString deserializeDelegate,
     String collectionFormat,
     String name,
     dynamic value) {
@@ -14,7 +14,7 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
   if (name == null || name.isEmpty || value == null) return params;
 
   if (value is! List) {
-    params.add(QueryParam(name, deserializeDelegate.parameterToString(value)));
+    params.add(QueryParam(name, deserializeDelegate(value)));
     return params;
   }
 
@@ -26,20 +26,15 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
       : collectionFormat; // default: csv
 
   if (collectionFormat == "multi") {
-    return values.map(
-        (v) => QueryParam(name, deserializeDelegate.parameterToString(v)));
+    return values.map((v) => QueryParam(name, deserializeDelegate(v)));
   }
 
   String delimiter = _delimiters[collectionFormat] ?? ",";
 
   params.add(QueryParam(
-      name,
-      values
-          .map((v) => deserializeDelegate.parameterToString(v))
-          .join(delimiter)));
+      name, values.map((v) => deserializeDelegate(v)).join(delimiter)));
   return params;
 }
-
 
 /// Returns the decoded body by utf-8 if application/json with the given headers.
 /// Else, returns the decoded body by default algorithm of dart:http.
@@ -77,4 +72,3 @@ List<DateTime> openApiDateTimeList(dynamic json) {
   List<String> dts = (json as List).cast<String>();
   return dts.map((s) => DateTime.parse(s)).toList();
 }
-

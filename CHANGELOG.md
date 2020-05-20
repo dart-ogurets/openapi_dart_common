@@ -1,3 +1,8 @@
+3.1.0
+=====
+removing LocalClientApi and QueryParamHelper from api to make it simpler to
+use.
+
 3.0.1
 =====
 fix for dio content headers
