@@ -13,7 +13,7 @@ Add these to your `pubspec.yaml` and then combine them together.
 
 ```yaml
 dependencies:
-  openapi_dart_common: ^2.0.0
+  openapi_dart_common: ^3.1.0
   your_generated_lib:
     path:
       ../your_generated_lib

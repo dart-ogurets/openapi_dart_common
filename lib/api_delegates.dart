@@ -13,6 +13,13 @@ class ApiResponse {
   int statusCode;
 }
 
+// extra api if x-dart-rich-operation: operationName is tagged in path
+class RichApiResponse<T> {
+  int statusCode; 
+  Map<String, List<String>> headers;
+  T data;
+}
+
 abstract class ApiClientDelegate {
   Future<ApiResponse> invokeAPI(String basePath, String path,
       Iterable<QueryParam> queryParams, Object body, Options options);

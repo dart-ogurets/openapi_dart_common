@@ -30,7 +30,7 @@ class ApiClient {
   /// Update query and header parameters based on authentication settings.
   /// @param authNames The authentications to apply
   void _updateParamsForAuth(List<String> authNames,
-      List<QueryParam> queryParams, Map<String, String> headerParams) {
+      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
     authNames.forEach((authName) {
       Authentication auth = _authentications[authName];
       if (auth == null) {
@@ -52,13 +52,11 @@ class ApiClient {
       String path,
       Iterable<QueryParam> queryParams,
       Object body,
-      Map<String, String> headerParams,
       List<String> authNames,
       Options options) async {
-    _updateParamsForAuth(authNames, queryParams, headerParams);
+    _updateParamsForAuth(authNames, queryParams, options.headers);
 
     options.headers.addAll(_defaultHeaderMap);
-    options.headers.addAll(headerParams);
 
     return apiClientDelegate.invokeAPI(
         basePath, path, queryParams, body, options);

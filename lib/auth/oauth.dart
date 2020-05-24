@@ -7,7 +7,7 @@ class OAuth implements Authentication {
 
   @override
   void applyToParams(
-      List<QueryParam> queryParams, Map<String, String> headerParams) {
+      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
     if (_accessToken != null) {
       headerParams["Authorization"] = "Bearer $_accessToken";
     }

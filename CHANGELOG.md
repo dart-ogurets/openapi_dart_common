@@ -1,7 +1,7 @@
 3.1.0
 =====
 removing LocalClientApi and QueryParamHelper from api to make it simpler to
-use.
+use. Introducion of Rich Response for extension methods.
 
 3.0.1
 =====

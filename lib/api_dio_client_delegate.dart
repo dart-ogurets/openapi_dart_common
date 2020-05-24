@@ -34,6 +34,8 @@ class DioClientDelegate implements ApiClientDelegate {
             options: options, data: body, queryParameters: qp);
       }
 
+
+
       return ApiResponse()
         ..headers = _convertHeaders(response?.headers)
         ..statusCode = response?.statusCode ?? 500
