@@ -1,4 +1,5 @@
 part of dart_openapi;
+// @dart=2.9
 
 class ApiException implements Exception {
   int code = 0;

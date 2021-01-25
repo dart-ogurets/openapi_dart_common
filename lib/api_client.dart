@@ -1,4 +1,5 @@
 part of dart_openapi;
+// @dart=2.9
 
 class ApiClient {
   ApiClientDelegate apiClientDelegate;
@@ -48,12 +49,8 @@ class ApiClient {
 
   // We don't use a Map<String, String> for queryParams.
   // If collectionFormat is 'multi' a key might appear multiple times.
-  Future<ApiResponse> invokeAPI(
-      String path,
-      Iterable<QueryParam> queryParams,
-      Object body,
-      List<String> authNames,
-      Options options) async {
+  Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> queryParams,
+      Object body, List<String> authNames, Options options) async {
     _updateParamsForAuth(authNames, queryParams, options.headers);
 
     options.headers.addAll(_defaultHeaderMap);

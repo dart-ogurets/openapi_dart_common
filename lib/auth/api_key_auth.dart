@@ -1,4 +1,5 @@
 part of dart_openapi;
+// @dart=2.9
 
 class ApiKeyAuth implements Authentication {
   final String location;

@@ -1,4 +1,5 @@
 part of dart_openapi;
+// @dart=2.9
 
 class DioClientDelegate implements ApiClientDelegate {
   final Dio client;
@@ -33,8 +34,6 @@ class DioClientDelegate implements ApiClientDelegate {
         response = await client.request<ResponseBody>(url,
             options: options, data: body, queryParameters: qp);
       }
-
-
 
       return ApiResponse()
         ..headers = _convertHeaders(response?.headers)

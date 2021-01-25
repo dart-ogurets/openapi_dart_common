@@ -1,3 +1,8 @@
+3.2.0
+=====
+support for toDateString() and toDateStringList(). Had to hard code the dependency for the http multi server
+because the 2.1.0 version does not compile.
+
 3.1.0
 =====
 removing LocalClientApi and QueryParamHelper from api to make it simpler to
