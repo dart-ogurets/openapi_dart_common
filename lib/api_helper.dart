@@ -6,8 +6,8 @@ const _delimiters = const {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 // port from Java version
 Iterable<QueryParam> convertParametersForCollectionFormat(
     ParameterToString deserializeDelegate,
-    String collectionFormat,
-    String name,
+    String ?collectionFormat,
+    String ?name,
     dynamic value) {
   var params = <QueryParam>[];
 

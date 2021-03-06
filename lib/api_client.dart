@@ -11,7 +11,7 @@ class ApiClient {
   ApiClient({this.basePath = "http://localhost", apiClientDelegate})
       : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
 
-  void setDefaultHeader(String key, String value) {
+  void setDefaultHeader(String key, String ?value) {
     if (value == null) {
       _defaultHeaderMap.remove(key);
     } else {
@@ -20,7 +20,7 @@ class ApiClient {
   }
 
   // ensure you set the Auth before calling an API that requires that type
-  void setAuthentication(String key, Authentication auth) {
+  void setAuthentication(String key, Authentication ?auth) {
     if (auth == null) {
       _authentications.remove(key);
     } else {
