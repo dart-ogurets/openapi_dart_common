@@ -1,5 +1,5 @@
 library dart_openapi;
-// @dart=2.9
+
 
 import 'dart:async';
 import 'dart:convert';

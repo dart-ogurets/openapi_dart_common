@@ -1,4 +1,4 @@
-// @dart=2.9
+
 
 import 'package:openapi_dart_common/openapi.dart';
 import 'package:test/test.dart';

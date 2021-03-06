@@ -1,5 +1,5 @@
 part of dart_openapi;
-// @dart=2.9
+
 
 class ApiClient {
   ApiClientDelegate apiClientDelegate;
@@ -31,9 +31,9 @@ class ApiClient {
   /// Update query and header parameters based on authentication settings.
   /// @param authNames The authentications to apply
   void _updateParamsForAuth(List<String> authNames,
-      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
+      List<QueryParam> queryParams, Map<String, dynamic>? headerParams) {
     authNames.forEach((authName) {
-      Authentication auth = _authentications[authName];
+      Authentication? auth = _authentications[authName];
       if (auth == null) {
         throw ArgumentError("Authentication undefined: " + authName);
       }
@@ -41,7 +41,7 @@ class ApiClient {
     });
   }
 
-  T getAuthentication<T extends Authentication>(String name) {
+  T? getAuthentication<T extends Authentication>(String name) {
     var authentication = _authentications[name];
 
     return authentication is T ? authentication : null;
@@ -51,9 +51,9 @@ class ApiClient {
   // If collectionFormat is 'multi' a key might appear multiple times.
   Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> queryParams,
       Object body, List<String> authNames, Options options) async {
-    _updateParamsForAuth(authNames, queryParams, options.headers);
+    _updateParamsForAuth(authNames, queryParams as List<QueryParam>, options.headers);
 
-    options.headers.addAll(_defaultHeaderMap);
+    options.headers!.addAll(_defaultHeaderMap);
 
     return apiClientDelegate.invokeAPI(
         basePath, path, queryParams, body, options);
