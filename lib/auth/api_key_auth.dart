@@ -1,11 +1,10 @@
 part of dart_openapi;
-// @dart=2.9
 
 class ApiKeyAuth implements Authentication {
   final String location;
   final String paramName;
-  String _apiKey;
-  String apiKeyPrefix;
+  String? _apiKey;
+  String? apiKeyPrefix;
 
   set apiKey(String key) => _apiKey = key;
 
@@ -13,8 +12,8 @@ class ApiKeyAuth implements Authentication {
 
   @override
   void applyToParams(
-      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
-    String value;
+      List<QueryParam> queryParams, Map<String, dynamic>? headerParams) {
+    String? value;
     if (apiKeyPrefix != null) {
       value = '$apiKeyPrefix $_apiKey';
     } else {
@@ -24,7 +23,7 @@ class ApiKeyAuth implements Authentication {
     if (location == 'query' && value != null) {
       queryParams.add(QueryParam(paramName, value));
     } else if (location == 'header' && value != null) {
-      headerParams[paramName] = value;
+      headerParams![paramName] = value;
     }
   }
 }

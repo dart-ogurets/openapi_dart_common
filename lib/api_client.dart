@@ -1,5 +1,4 @@
 part of dart_openapi;
-// @dart=2.9
 
 class ApiClient {
   ApiClientDelegate apiClientDelegate;
@@ -11,7 +10,7 @@ class ApiClient {
   ApiClient({this.basePath = "http://localhost", apiClientDelegate})
       : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
 
-  void setDefaultHeader(String key, String value) {
+  void setDefaultHeader(String key, String? value) {
     if (value == null) {
       _defaultHeaderMap.remove(key);
     } else {
@@ -20,7 +19,7 @@ class ApiClient {
   }
 
   // ensure you set the Auth before calling an API that requires that type
-  void setAuthentication(String key, Authentication auth) {
+  void setAuthentication(String key, Authentication? auth) {
     if (auth == null) {
       _authentications.remove(key);
     } else {
@@ -31,9 +30,9 @@ class ApiClient {
   /// Update query and header parameters based on authentication settings.
   /// @param authNames The authentications to apply
   void _updateParamsForAuth(List<String> authNames,
-      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
+      List<QueryParam> queryParams, Map<String, dynamic>? headerParams) {
     authNames.forEach((authName) {
-      Authentication auth = _authentications[authName];
+      Authentication? auth = _authentications[authName];
       if (auth == null) {
         throw ArgumentError("Authentication undefined: " + authName);
       }
@@ -41,7 +40,7 @@ class ApiClient {
     });
   }
 
-  T getAuthentication<T extends Authentication>(String name) {
+  T? getAuthentication<T extends Authentication>(String name) {
     var authentication = _authentications[name];
 
     return authentication is T ? authentication : null;
@@ -49,12 +48,13 @@ class ApiClient {
 
   // We don't use a Map<String, String> for queryParams.
   // If collectionFormat is 'multi' a key might appear multiple times.
-  Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> queryParams,
+  Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> qParams,
       Object body, List<String> authNames, Options options) async {
+    List<QueryParam> queryParams = []..addAll(qParams);
+    Map<String, dynamic> headers = options.headers ?? {};
     _updateParamsForAuth(authNames, queryParams, options.headers);
-
-    options.headers.addAll(_defaultHeaderMap);
-
+    headers.addAll(_defaultHeaderMap);
+    options.headers = headers;
     return apiClientDelegate.invokeAPI(
         basePath, path, queryParams, body, options);
   }

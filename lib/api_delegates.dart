@@ -8,16 +8,16 @@ class QueryParam {
 }
 
 class ApiResponse {
-  Stream<List<int>> body;
-  Map<String, List<String>> headers;
-  int statusCode;
+  late Stream<List<int>> body;
+  Map<String, List<String>>? headers;
+  int? statusCode;
 }
 
 // extra api if x-dart-rich-operation: operationName is tagged in path
 class RichApiResponse<T> {
-  int statusCode; 
-  Map<String, List<String>> headers;
-  T data;
+  int? statusCode; 
+  Map<String, List<String>>? headers;
+  T? data;
 }
 
 abstract class ApiClientDelegate {

@@ -1,13 +1,13 @@
 part of dart_openapi;
-// @dart=2.9
+
 
 const _delimiters = const {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 
 // port from Java version
 Iterable<QueryParam> convertParametersForCollectionFormat(
     ParameterToString deserializeDelegate,
-    String collectionFormat,
-    String name,
+    String ?collectionFormat,
+    String ?name,
     dynamic value) {
   var params = <QueryParam>[];
 
@@ -19,7 +19,7 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
     return params;
   }
 
-  List values = value as List;
+  List values = value;
 
   // get the collection format
   collectionFormat = (collectionFormat == null || collectionFormat.isEmpty)
@@ -40,7 +40,7 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
 /// Returns the decoded body by utf-8 if application/json with the given headers.
 /// Else, returns the decoded body by default algorithm of dart:http.
 /// Because avoid to text garbling when header only contains 'application/json' without '; charset=utf-8'.
-Future<String> decodeBodyBytes(ApiResponse response) async {
+Future<String?> decodeBodyBytes(ApiResponse response) async {
 //  var contentType = response.headers['content-type'];
 
 //  if (contentType != null && contentType.first.contains('application/json')) {
@@ -73,8 +73,8 @@ extension OpenApiDateTimeExtension on DateTime {
 }
 
 extension DateTimeList on List<DateTime> {
-  List<String> toDateStringList() =>
-      map((e) => e == null ? null : e.toDateString()).toList();
+  List<String?> toDateStringList() =>
+      map((e) => e.toDateString()).toList();
 }
 
 // this is the same, but for a json object which is in fact a list of strings
