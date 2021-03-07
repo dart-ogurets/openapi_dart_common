@@ -1,16 +1,14 @@
 part of dart_openapi;
 
-
 class HttpBasicAuth implements Authentication {
-  String? _username;
-  String? _password;
+  late String _username;
+  late String _password;
 
   @override
   void applyToParams(
       List<QueryParam> queryParams, Map<String, dynamic>? headerParams) {
-    String str = (_username == null ? "" : _username)! +
-        ":" +
-        (_password == null ? "" : _password!);
+    String str = _username +
+        ":" + _password;
     headerParams!["Authorization"] = "Basic " + base64.encode(utf8.encode(str));
   }
 

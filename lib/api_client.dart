@@ -1,6 +1,5 @@
 part of dart_openapi;
 
-
 class ApiClient {
   ApiClientDelegate apiClientDelegate;
   String basePath;
@@ -11,7 +10,7 @@ class ApiClient {
   ApiClient({this.basePath = "http://localhost", apiClientDelegate})
       : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
 
-  void setDefaultHeader(String key, String ?value) {
+  void setDefaultHeader(String key, String? value) {
     if (value == null) {
       _defaultHeaderMap.remove(key);
     } else {
@@ -20,7 +19,7 @@ class ApiClient {
   }
 
   // ensure you set the Auth before calling an API that requires that type
-  void setAuthentication(String key, Authentication ?auth) {
+  void setAuthentication(String key, Authentication? auth) {
     if (auth == null) {
       _authentications.remove(key);
     } else {
@@ -49,12 +48,13 @@ class ApiClient {
 
   // We don't use a Map<String, String> for queryParams.
   // If collectionFormat is 'multi' a key might appear multiple times.
-  Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> queryParams,
+  Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> qParams,
       Object body, List<String> authNames, Options options) async {
-    _updateParamsForAuth(authNames, queryParams as List<QueryParam>, options.headers);
-
-    options.headers!.addAll(_defaultHeaderMap);
-
+    List<QueryParam> queryParams = []..addAll(qParams);
+    Map<String, dynamic> headers = options.headers ?? {};
+    _updateParamsForAuth(authNames, queryParams, options.headers);
+    headers.addAll(_defaultHeaderMap);
+    options.headers = headers;
     return apiClientDelegate.invokeAPI(
         basePath, path, queryParams, body, options);
   }
