@@ -12,7 +12,7 @@ class ApiKeyAuth implements Authentication {
 
   @override
   void applyToParams(
-      List<QueryParam> queryParams, Map<String, dynamic>? headerParams) {
+      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
     String? value;
     if (apiKeyPrefix != null) {
       value = '$apiKeyPrefix $_apiKey';
@@ -23,7 +23,7 @@ class ApiKeyAuth implements Authentication {
     if (location == 'query' && value != null) {
       queryParams.add(QueryParam(paramName, value));
     } else if (location == 'header' && value != null) {
-      headerParams![paramName] = value;
+      headerParams[paramName] = value;
     }
   }
 }

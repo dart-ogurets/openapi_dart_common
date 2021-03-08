@@ -30,7 +30,7 @@ class ApiClient {
   /// Update query and header parameters based on authentication settings.
   /// @param authNames The authentications to apply
   void _updateParamsForAuth(List<String> authNames,
-      List<QueryParam> queryParams, Map<String, dynamic>? headerParams) {
+      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
     authNames.forEach((authName) {
       Authentication? auth = _authentications[authName];
       if (auth == null) {
@@ -49,12 +49,16 @@ class ApiClient {
   // We don't use a Map<String, String> for queryParams.
   // If collectionFormat is 'multi' a key might appear multiple times.
   Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> qParams,
-      Object body, List<String> authNames, Options options) async {
+      Object? body, List<String> authNames, Options options) async {
+    // addAll(options?.headers?.cast<String, String>() ?? {});
     List<QueryParam> queryParams = []..addAll(qParams);
     Map<String, dynamic> headers = options.headers ?? {};
-    _updateParamsForAuth(authNames, queryParams, options.headers);
+
+    _updateParamsForAuth(authNames, queryParams, headers);
+
     headers.addAll(_defaultHeaderMap);
     options.headers = headers;
+
     return apiClientDelegate.invokeAPI(
         basePath, path, queryParams, body, options);
   }
