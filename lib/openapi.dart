@@ -1,6 +1,5 @@
 library dart_openapi;
 
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
@@ -16,3 +15,4 @@ part 'auth/api_key_auth.dart';
 part 'auth/authentication.dart';
 part 'auth/http_basic_auth.dart';
 part 'auth/oauth.dart';
+part 'deserialisation_error.dart';
