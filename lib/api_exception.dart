@@ -1,8 +1,7 @@
 part of dart_openapi;
 
-
 class ApiException implements Exception {
-  int? code = 0;
+  int code = 0;
   String? message;
   Exception? innerException;
   StackTrace? stackTrace;

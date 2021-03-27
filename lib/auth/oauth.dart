@@ -1,6 +1,5 @@
 part of dart_openapi;
 
-
 class OAuth implements Authentication {
   String? _accessToken;
 
@@ -8,9 +7,9 @@ class OAuth implements Authentication {
 
   @override
   void applyToParams(
-      List<QueryParam> queryParams, Map<String, dynamic>? headerParams) {
+      List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
     if (_accessToken != null) {
-      headerParams!["Authorization"] = "Bearer $_accessToken";
+      headerParams["Authorization"] = "Bearer $_accessToken";
     }
   }
 

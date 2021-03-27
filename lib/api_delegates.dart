@@ -8,21 +8,25 @@ class QueryParam {
 }
 
 class ApiResponse {
-  late Stream<List<int>> body;
-  Map<String, List<String>>? headers;
-  int? statusCode;
+  Stream<List<int>>? body;
+  Map<String, List<String>> headers;
+  int statusCode;
+
+  ApiResponse(this.statusCode, this.headers, this.body);
 }
 
 // extra api if x-dart-rich-operation: operationName is tagged in path
 class RichApiResponse<T> {
-  int? statusCode; 
-  Map<String, List<String>>? headers;
+  int statusCode;
+  Map<String, List<String>> headers;
   T? data;
+
+  RichApiResponse(this.statusCode, this.headers, [this.data]);
 }
 
 abstract class ApiClientDelegate {
   Future<ApiResponse> invokeAPI(String basePath, String path,
-      Iterable<QueryParam> queryParams, Object body, Options options);
+      Iterable<QueryParam> queryParams, Object? body, Options options);
 }
 
 // a function that will convert a parameter to a string, used by the

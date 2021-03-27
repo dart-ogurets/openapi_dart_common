@@ -1,3 +1,7 @@
+4.0.0-prev1
+=====
+support for the new null safe bibraries. pre-release as we are waiting on Dio.
+
 3.2.0
 =====
 support for toDateString() and toDateStringList(). Had to hard code the dependency for the http multi server
