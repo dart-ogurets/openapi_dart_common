@@ -1,3 +1,7 @@
+4.0.0
+=====
+support for release version of Dio (only change)
+
 4.0.0-prev1
 =====
 support for the new null safe bibraries. pre-release as we are waiting on Dio.
