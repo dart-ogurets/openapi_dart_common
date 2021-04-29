@@ -18,7 +18,7 @@ class DioClientDelegate implements ApiClientDelegate {
     options.receiveDataWhenStatusError = true;
 
     // Dio can't cope with this in both places, it just adds them together in a stupid way
-    if (options.headers!['Content-Type'] != null) {
+    if (options.headers != null && options.headers!['Content-Type'] != null) {
       options.contentType = options.headers!['Content-Type'];
       options.headers!.remove('Content-Type');
     }
