@@ -57,6 +57,15 @@ Future<String> decodeBodyBytes(ApiResponse response) async {
 //  }
 }
 
+String openApiDateTimeParameterToString(dynamic value) {
+  return Uri.encodeComponent((value as DateTime).toUtc().toIso8601String());
+}
+
+String openApiDateParameterToString(dynamic value) {
+  return Uri.encodeComponent((value as DateTime).toDateString());
+}
+
+
 // this exists because we otherwise need an extension method DateTime.fromJson and i don't want to clash with other libs
 DateTime openApiDateTimeFromJson(dynamic json) {
   return DateTime.parse(json as String);
