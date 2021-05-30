@@ -8,7 +8,7 @@ class DioClientDelegate implements ApiClientDelegate {
 
   @override
   Future<ApiResponse> invokeAPI(String basePath, String path,
-      Iterable<QueryParam> queryParams, Object body, Options options) async {
+      Iterable<QueryParam> queryParams, Object body, Options options, {bool passErrorsAsApiResponses = false}) async {
     String url = basePath + path;
 
     // fill in query parameters
@@ -38,9 +38,26 @@ class DioClientDelegate implements ApiClientDelegate {
       return ApiResponse()
         ..headers = _convertHeaders(response?.headers)
         ..statusCode = response?.statusCode ?? 500
-        ..body = response?.data.stream;
+        ..body = response?.data?.stream;
     } catch (e, s) {
       if (e is DioError) {
+        if (passErrorsAsApiResponses) {
+          if (e.response == null) {
+            return ApiResponse()
+                ..innerException = e
+                ..stackTrace = s;
+          }
+
+          if (e.response is Response<ResponseBody>) {
+            final response = e.response as Response<ResponseBody>;
+
+            return ApiResponse()
+              ..headers = _convertHeaders(response.headers)
+              ..statusCode = response.statusCode ?? 500
+              ..body = response.data?.stream;
+          }
+        }
+
         if (e.response == null) {
           throw ApiException.withInner(500, 'Connection error', e, s);
         } else {

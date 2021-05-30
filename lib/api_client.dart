@@ -5,6 +5,10 @@ class ApiClient {
   ApiClientDelegate apiClientDelegate;
   String basePath;
 
+  // if this is set, to true, then errors will not be mapped as exceptions
+  // they will be passed as ApiResponses so the client can deal with them
+  bool passErrorsAsApiResponses = false;
+
   Map<String, String> _defaultHeaderMap = {};
   Map<String, Authentication> _authentications = {};
 
@@ -56,6 +60,6 @@ class ApiClient {
     options.headers.addAll(_defaultHeaderMap);
 
     return apiClientDelegate.invokeAPI(
-        basePath, path, queryParams, body, options);
+        basePath, path, queryParams, body, options, passErrorsAsApiResponses: passErrorsAsApiResponses);
   }
 }
