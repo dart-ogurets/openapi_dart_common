@@ -1,6 +1,6 @@
 4.0.1
 =====
-Support for Date and Date-Time to be properly encoded for forms and query parameters (urlencoded)
+Support for Date and Date-Time to be properly encoded for forms and query parameters (urlencoded, Dart 2.12 null + null-safe)
 
 4.0.0
 =====
@@ -8,7 +8,7 @@ support for release version of Dio (only change)
 
 4.0.0-prev1
 =====
-support for the new null safe bibraries. pre-release as we are waiting on Dio.
+support for the new null safe binaries. pre-release as we are waiting on Dio.
 
 3.2.0
 =====
@@ -18,7 +18,7 @@ because the 2.1.0 version does not compile.
 3.1.0
 =====
 removing LocalClientApi and QueryParamHelper from api to make it simpler to
-use. Introducion of Rich Response for extension methods.
+use. Introduction of Rich Response for extension methods.
 
 3.0.1
 =====
@@ -26,7 +26,7 @@ fix for dio content headers
 
 3.0.0
 =====
-significant refactoring to co-incide with the 3.x release of the Dart plugin cleanup.
+significant refactoring to co-inside with the 3.x release of the Dart plugin cleanup.
 
 2.0.1
 ======
