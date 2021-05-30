@@ -7,6 +7,10 @@ class ApiClient {
   Map<String, String> _defaultHeaderMap = {};
   Map<String, Authentication> _authentications = {};
 
+  // if this is set, to true, then errors will not be mapped as exceptions
+  // they will be passed as ApiResponses so the client can deal with them
+  bool passErrorsAsApiResponses = false;
+
   ApiClient({this.basePath = "http://localhost", apiClientDelegate})
       : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
 
@@ -60,6 +64,7 @@ class ApiClient {
     options.headers = headers;
 
     return apiClientDelegate.invokeAPI(
-        basePath, path, queryParams, body, options);
+        basePath, path, queryParams, body, options,
+        passErrorsAsApiResponses: passErrorsAsApiResponses);
   }
 }
