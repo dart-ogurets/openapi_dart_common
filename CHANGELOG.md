@@ -1,3 +1,7 @@
+4.0.1
+=====
+Support for Date and Date-Time to be properly encoded for forms and query parameters (urlencoded)
+
 4.0.0
 =====
 support for release version of Dio (only change)
