@@ -46,11 +46,15 @@ class DioClientDelegate implements ApiClientDelegate {
               ..stackTrace = s;
           }
 
-          if (e.response is Response<ResponseBody>) {
-            final response = e.response as Response<ResponseBody>;
+          if (e.response!.data is ResponseBody) {
+            final response = e.response!;
+            final data = response.data as ResponseBody;
 
             return ApiResponse(response.statusCode ?? 500,
-                _convertHeaders(response.headers), response.data?.stream);
+                _convertHeaders(response.headers), data.stream);
+          } else {
+            print(
+                "e is not responsebody ${e.response.runtimeType.toString()} ${e.response!.data?.runtimeType.toString() ?? ''}");
           }
         }
 
