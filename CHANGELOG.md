@@ -1,4 +1,4 @@
-3.2.1
+3.3.0
 =====
 support for the correct encoding of date/date-times as per 5.5 release (for Dart 2.7-2.11)
 
