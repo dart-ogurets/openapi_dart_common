@@ -11,6 +11,8 @@ class ApiResponse {
   Stream<List<int>>? body;
   Map<String, List<String>> headers;
   int statusCode;
+  Exception? innerException;
+  StackTrace? stackTrace;
 
   ApiResponse(this.statusCode, this.headers, this.body);
 }
@@ -26,7 +28,8 @@ class RichApiResponse<T> {
 
 abstract class ApiClientDelegate {
   Future<ApiResponse> invokeAPI(String basePath, String path,
-      Iterable<QueryParam> queryParams, Object? body, Options options);
+      Iterable<QueryParam> queryParams, Object? body, Options options,
+      {bool passErrorsAsApiResponses = false});
 }
 
 // a function that will convert a parameter to a string, used by the

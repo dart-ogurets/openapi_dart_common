@@ -13,7 +13,7 @@ Add these to your `pubspec.yaml` and then combine them together.
 
 ```yaml
 dependencies:
-  openapi_dart_common: ^3.1.0
+  openapi_dart_common: ^3.2.1 
   your_generated_lib:
     path:
       ../your_generated_lib
@@ -46,7 +46,8 @@ careful not to mix those requiring `dart:html` (which only exists in the browser
 #### Maven
 
 If you don't have Maven installed, you can install it fairly easily on Linux and Mac (its in brew), it will require
-a JDK implementation so if you don't have done get one from https://adoptopenjdk.net/.
+a JDK implementation so if you don't have done get one from https://adoptopenjdk.net/. Alternatively you can use it from 
+Docker.
 
 
 
