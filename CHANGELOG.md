@@ -1,3 +1,7 @@
+3.3.1
+=====
+support for unencoded datetime and date parameters for queries
+
 3.3.0
 =====
 support for the correct encoding of date/date-times as per 5.5 release (for Dart 2.7-2.11)

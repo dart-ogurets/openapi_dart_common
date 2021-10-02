@@ -57,14 +57,25 @@ Future<String> decodeBodyBytes(ApiResponse response) async {
 //  }
 }
 
-String openApiDateTimeParameterToString(dynamic value) {
-  return Uri.encodeComponent((value as DateTime).toUtc().toIso8601String());
+/// Convert a DateTime to a string parameter. A {path} parameter requires encoding,
+/// whereas a Query parameter doesn't. To ensure a non-breaking API, we use encode to default  true.
+String openApiDateTimeParameterToString(dynamic value, [bool encode = true]) {
+  if (encode) {
+    return Uri.encodeComponent((value as DateTime).toUtc().toIso8601String());
+  } else {
+    return (value as DateTime).toUtc().toIso8601String();
+  }
 }
 
-String openApiDateParameterToString(dynamic value) {
-  return Uri.encodeComponent((value as DateTime).toDateString());
+/// Convert a Date to a string parameter. A {path} parameter requires encoding,
+/// whereas a Query parameter doesn't. To ensure a non-breaking API, we use encode to default  true.
+String openApiDateParameterToString(dynamic value, [bool encode = true]) {
+  if (encode) {
+    return Uri.encodeComponent((value as DateTime).toDateString());
+  } else {
+    return (value as DateTime).toDateString();
+  }
 }
-
 
 // this exists because we otherwise need an extension method DateTime.fromJson and i don't want to clash with other libs
 DateTime openApiDateTimeFromJson(dynamic json) {
