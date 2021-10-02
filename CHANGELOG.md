@@ -1,3 +1,7 @@
+4.1.1
+=====
+Support for unencoded Date + DateTime parameters for query parameters. 
+
 4.1.0
 =====
 Support for Date and Date-Time to be properly encoded for forms and query parameters (urlencoded, Dart 2.12 null + null-safe)

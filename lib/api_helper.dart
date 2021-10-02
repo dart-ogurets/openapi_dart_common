@@ -48,15 +48,27 @@ Future<String?> decodeBodyBytes(Stream<List<int>> body) async {
   }
 }
 
-String openApiDateTimeParameterToString(dynamic value) {
-  return Uri.encodeComponent((value as DateTime).toUtc().toIso8601String());
+/// Convert a DateTime to a string parameter. A {path} parameter requires encoding,
+/// whereas a Query parameter doesn't. To ensure a non-breaking API, we use encode to default  true.
+String openApiDateTimeParameterToString(dynamic value, [bool encode = true]) {
+  if (encode) {
+    return Uri.encodeComponent((value as DateTime).toUtc().toIso8601String());
+  } else {
+    return (value as DateTime).toUtc().toIso8601String();
+  }
 }
 
-String openApiDateParameterToString(dynamic value) {
-  return Uri.encodeComponent((value as DateTime).toDateString());
+/// Convert a Date to a string parameter. A {path} parameter requires encoding,
+/// whereas a Query parameter doesn't. To ensure a non-breaking API, we use encode to default  true.
+String openApiDateParameterToString(dynamic value, [bool encode = true]) {
+  if (encode) {
+    return Uri.encodeComponent((value as DateTime).toDateString());
+  } else {
+    return (value as DateTime).toDateString();
+  }
 }
 
-// this exists because we otherwise need an extension method DateTime.fromJson and i don't want to clash with other libs
+/// this exists because we otherwise need an extension method DateTime.fromJson and i don't want to clash with other libs
 DateTime openApiDateTimeFromJson(dynamic json) {
   return DateTime.parse(json as String);
 }
@@ -75,7 +87,7 @@ extension DateTimeList on List<DateTime> {
   List<String?> toDateStringList() => map((e) => e.toDateString()).toList();
 }
 
-// this is the same, but for a json object which is in fact a list of strings
+/// this is the same, but for a json object which is in fact a list of strings
 List<DateTime> openApiDateTimeList(dynamic json) {
   List<String> dts = (json as List).cast<String>();
 
