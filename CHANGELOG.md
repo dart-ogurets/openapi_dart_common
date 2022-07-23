@@ -1,3 +1,7 @@
+4.1.2
+=====
+Support for repeating query parameters
+
 4.1.1
 =====
 Support for unencoded Date + DateTime parameters for query parameters. 

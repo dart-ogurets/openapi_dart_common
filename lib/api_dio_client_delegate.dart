@@ -11,9 +11,21 @@ class DioClientDelegate implements ApiClientDelegate {
       {bool passErrorsAsApiResponses = false}) async {
     String url = basePath + path;
 
-    // fill in query parameters
-    Map<String, String> qp = {};
-    queryParams.forEach((q) => qp[q.name] = q.value);
+    // fill in query parameters, taking care to deal with duplicate
+    // field names
+    Map<String, dynamic> qp = {};
+    queryParams.forEach((q) {
+      if (qp.containsKey(q.name)) {
+        final val = qp[q.name];
+        if (val is List) {
+          val.add(q.value);
+        } else {
+          qp[q.name] = [val, q.value];
+        }
+      } else {
+        qp[q.name] = q.value;
+      }
+    });
 
     options.responseType = ResponseType.stream;
     options.receiveDataWhenStatusError = true;
