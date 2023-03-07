@@ -1,3 +1,7 @@
+5.0.0
+=====
+Updated for Dio5 support.
+
 4.1.2
 =====
 Support for repeating query parameters
