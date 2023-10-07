@@ -1,10 +1,10 @@
 name: openapi_dart_common
-version: 5.0.0
+version: 5.0.1
 homepage: https://www.featurehub.io
 repository: https://github.com/dart-ogurets/openapi_dart_common
 description: OpenAPI API common libraries so the generator doesn't generate them
 environment:
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: '>=2.15.0 <3.1.0'
 dependencies:
   dio: '^5.0.0'
 dev_dependencies:

@@ -1,3 +1,7 @@
+5.0.1
+=====
+Extended range for Dart 3.0 support
+
 5.0.0
 =====
 Updated for Dio5 support.
