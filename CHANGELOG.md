@@ -1,6 +1,8 @@
-5.0.1
+5.1.0
 =====
-Extended range for Dart 3.0 support
+- Extended range for Dart 3.0 support
+- Added dependency on logging package (hence version bump)
+- Cleaned up a lot of info and warning level issues
 
 5.0.0
 =====

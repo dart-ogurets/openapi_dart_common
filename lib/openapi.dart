@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:dio/dio.dart';
+import 'package:openapi_dart_common/src/logging.dart';
 
 part 'api_client.dart';
 part 'api_delegates.dart';

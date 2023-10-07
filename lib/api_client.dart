@@ -4,15 +4,15 @@ class ApiClient {
   ApiClientDelegate apiClientDelegate;
   String basePath;
 
-  Map<String, String> _defaultHeaderMap = {};
-  Map<String, Authentication> _authentications = {};
+  final Map<String, String> _defaultHeaderMap = {};
+  final Map<String, Authentication> _authentications = {};
 
   // if this is set, to true, then errors will not be mapped as exceptions
   // they will be passed as ApiResponses so the client can deal with them
   bool passErrorsAsApiResponses = false;
 
   ApiClient({this.basePath = "http://localhost", apiClientDelegate})
-      : this.apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
+      : apiClientDelegate = apiClientDelegate ?? DioClientDelegate();
 
   void setDefaultHeader(String key, String? value) {
     if (value == null) {
@@ -35,13 +35,13 @@ class ApiClient {
   /// @param authNames The authentications to apply
   void _updateParamsForAuth(List<String> authNames,
       List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
-    authNames.forEach((authName) {
+    for (var authName in authNames) {
       Authentication? auth = _authentications[authName];
       if (auth == null) {
-        throw ArgumentError("Authentication undefined: " + authName);
+        throw ArgumentError("Authentication undefined: $authName");
       }
       auth.applyToParams(queryParams, headerParams);
-    });
+    }
   }
 
   T? getAuthentication<T extends Authentication>(String name) {
@@ -55,7 +55,7 @@ class ApiClient {
   Future<ApiResponse> invokeAPI(String path, Iterable<QueryParam> qParams,
       Object? body, List<String> authNames, Options options) async {
     // addAll(options?.headers?.cast<String, String>() ?? {});
-    List<QueryParam> queryParams = []..addAll(qParams);
+    List<QueryParam> queryParams = [...qParams];
     Map<String, dynamic> headers = options.headers ?? {};
 
     _updateParamsForAuth(authNames, queryParams, headers);

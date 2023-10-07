@@ -14,8 +14,8 @@ void main() {
       'We have a dynamic list of datetimes and it comes back as a properly typed list',
       () {
     final exact = [
-      DateTime.now().add(Duration(seconds: 1)),
-      DateTime.now().add(Duration(seconds: 1))
+      DateTime.now().add(const Duration(seconds: 1)),
+      DateTime.now().add(const Duration(seconds: 1))
     ];
     dynamic list =
         exact.map((dt) => dt.toIso8601String() as dynamic).toList() as dynamic;

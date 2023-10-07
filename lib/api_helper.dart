@@ -1,6 +1,6 @@
 part of dart_openapi;
 
-const _delimiters = const {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
+const _delimiters = {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 
 // port from Java version
 Iterable<QueryParam> convertParametersForCollectionFormat(
@@ -42,8 +42,8 @@ Iterable<QueryParam> convertParametersForCollectionFormat(
 Future<String?> decodeBodyBytes(Stream<List<int>> body) async {
   try {
     return await utf8.decodeStream(body);
-  } catch (e) {
-    print(e.toString()); // for time being
+  } catch (e, s) {
+    openapiLogger.warning("Cannot decode body", e, s);
     return null;
   }
 }
@@ -75,11 +75,7 @@ DateTime openApiDateTimeFromJson(dynamic json) {
 
 extension OpenApiDateTimeExtension on DateTime {
   String toDateString() {
-    return year.toString() +
-        '-' +
-        month.toString().padLeft(2, '0') +
-        '-' +
-        day.toString().padLeft(2, '0');
+    return '$year-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}';
   }
 }
 
@@ -97,7 +93,7 @@ List<DateTime> openApiDateTimeList(dynamic json) {
 final _regList = RegExp(r'^List<(.*)>$');
 final _regMap = RegExp(r'^Map<String,(.*)>$');
 
-typedef dynamic Deserializer(dynamic? value, String targetType);
+typedef Deserializer = dynamic Function(dynamic value, String targetType);
 
 dynamic matchLeftovers(
     dynamic value, String targetType, Deserializer deserialize) {
@@ -133,7 +129,7 @@ dynamic matchLeftovers(
 extension ListFromNull<T> on List<T?> {
   List<T> fromNull() {
     List<T> vals = [];
-    this.forEach((e) {
+    forEach((e) {
       if (e != null) {
         vals.add(e);
       }
@@ -145,7 +141,7 @@ extension ListFromNull<T> on List<T?> {
 extension MapFromNull<K, V> on Map<K, V> {
   Map<K, V> fromNull() {
     Map<K, V> vals = {};
-    this.forEach((key, value) {
+    forEach((key, value) {
       if (key != null && value != null) {
         vals[key] = value;
       }

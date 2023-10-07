@@ -8,9 +8,9 @@ class HttpBasicAuth implements Authentication {
   void applyToParams(
       List<QueryParam> queryParams, Map<String, dynamic> headerParams) {
     if (_username != null || _password != null) {
-      String str = (_username ?? "") + ":" + (_password ?? "");
+      String str = "${_username ?? ""}:${_password ?? ""}";
       headerParams["Authorization"] =
-          "Basic " + base64.encode(utf8.encode(str));
+          "Basic ${base64.encode(utf8.encode(str))}";
     }
   }
 

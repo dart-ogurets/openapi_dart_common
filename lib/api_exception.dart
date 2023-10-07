@@ -11,6 +11,7 @@ class ApiException implements Exception {
   ApiException.withInner(
       this.code, this.message, this.innerException, this.stackTrace);
 
+  @override
   String toString() {
     if (message == null && code == 0) return "ApiException";
 
@@ -20,7 +21,6 @@ class ApiException implements Exception {
       return "ApiException $code: $message";
     }
 
-    return "ApiException $code: $message (Inner exception: $innerException)\n\n" +
-        stackTrace.toString();
+    return "ApiException $code: $message (Inner exception: $innerException)\n\n$stackTrace";
   }
 }

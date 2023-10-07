@@ -1,5 +1,6 @@
 part of dart_openapi;
 
+
 class DioClientDelegate implements ApiClientDelegate {
   final Dio client;
 
@@ -14,7 +15,7 @@ class DioClientDelegate implements ApiClientDelegate {
     // fill in query parameters, taking care to deal with duplicate
     // field names
     Map<String, dynamic> qp = {};
-    queryParams.forEach((q) {
+    for (var q in queryParams) {
       if (qp.containsKey(q.name)) {
         final val = qp[q.name];
         if (val is List) {
@@ -25,7 +26,7 @@ class DioClientDelegate implements ApiClientDelegate {
       } else {
         qp[q.name] = q.value;
       }
-    });
+    }
 
     options.responseType = ResponseType.stream;
     options.receiveDataWhenStatusError = true;
@@ -65,7 +66,7 @@ class DioClientDelegate implements ApiClientDelegate {
             return ApiResponse(response.statusCode ?? 500,
                 _convertHeaders(response.headers), data.stream);
           } else {
-            print(
+            openapiLogger.warning(
                 "e is not responsebody ${e.response.runtimeType.toString()} ${e.response!.data?.runtimeType.toString() ?? ''}");
           }
         }
@@ -83,7 +84,7 @@ class DioClientDelegate implements ApiClientDelegate {
         }
       }
 
-      throw e;
+      rethrow;
     }
   }
 
