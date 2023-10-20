@@ -1,3 +1,7 @@
+5.1.1
+=====
+- Make Dart 3 support *wide* open.
+
 5.1.0
 =====
 - Extended range for Dart 3.0 support
