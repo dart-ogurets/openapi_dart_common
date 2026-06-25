@@ -1,3 +1,7 @@
+5.1.2
+=====
+- Adds support extension for Sets to ensure non-nullable sets are made
+
 5.1.1
 =====
 - Make Dart 3 support *wide* open.

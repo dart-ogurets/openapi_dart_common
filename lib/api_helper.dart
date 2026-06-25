@@ -126,15 +126,15 @@ dynamic matchLeftovers(
       500, 'Could not find a suitable class for deserialization');
 }
 
+extension SetFromNull<T> on Set<T?> {
+  Set<T> fromNull() {
+    return Set.from(this.where((e) => e != null));
+  }
+}
+
 extension ListFromNull<T> on List<T?> {
   List<T> fromNull() {
-    List<T> vals = [];
-    forEach((e) {
-      if (e != null) {
-        vals.add(e);
-      }
-    });
-    return vals;
+    return List.from(this.where((e) => e != null));
   }
 }
 
